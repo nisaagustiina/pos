@@ -7,10 +7,17 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="<?= base_url()?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?= base_url()?>assets/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>assets/bower_components/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="<?= base_url()?>assets/bower_components/sweetalert2/animate.min.css">
   <link rel="stylesheet" href="<?= base_url()?>assets/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="<?= base_url()?>assets/dist/css/skins/_all-skins.min.css">
   <link rel="stylesheet" href="<?= base_url()?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <style>
+    .swal2-popup{
+      font-size: 1.6rem !important;
+    }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini <?=$this->uri->segment(1) == 'sale'  ? 'sidebar-collapse' :  null?>">
 <div class="wrapper">
@@ -166,12 +173,47 @@
 <script src="<?= base_url()?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="<?= base_url()?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="<?= base_url()?>assets/dist/js/adminlte.min.js"></script>
+<script src="<?= base_url()?>assets/bower_components/sweetalert2/sweetalert2.min.js"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree();
     $('#tabel').DataTable();
     
   });
+</script>
+<script>
+  var flash = $('#flash').data('flash');
+  if(flash){
+    Swal.fire({
+      icon : 'success',
+      title: 'Success',
+      text: flash
+    })
+  }
+
+  $(document).on('click','#btn-hapus',function(e){
+    e.preventDefault();
+    var link = $(this).attr('href');
+    Swal.fire({
+      title: 'Apakah anda yakin?',
+      text: 'Data akan dihapus!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3885d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    }).then((result)=>{
+      if(result.isConfirmed){
+        window.location = link;
+      }
+    })
+  })
 </script>
 </body>
 </html>

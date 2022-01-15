@@ -11,7 +11,17 @@ class Auth extends CI_Controller {
 		$post = $this->input->post(null,TRUE);
 		if(isset($post['login'])){
 			$this->load->model('user_m');
-			$query = $this->user_m->login($post);
+			$query = $this->user_m->login($post); ?>
+			<link rel="stylesheet" href="<?= base_url()?>assets/bower_components/sweetalert2/sweetalert2.min.css">
+			<script src="<?= base_url()?>assets/bower_components/sweetalert2/sweetalert2.min.js"></script>
+			<style>
+				body{
+					font-family: "Helvetica Neue", Helvetica,Arial,sans-serif;
+					font-size: 1.124em;
+					font-weight: normal;
+				}
+			</style>
+			<?php
 			if($query->num_rows()>0){
 				$row = $query->row();
 
@@ -19,10 +29,31 @@ class Auth extends CI_Controller {
 					'id_user' => $row->id_user,
 					'level' => $row->level
 				);
-				$this->session->set_userdata($params);
-				echo "<script>alert('Login Berhasil!');window.location='".site_url('dashboard')."'</script>";
-			}else{
-				echo "<script>alert('Login Gagal! Username/Password Salah');window.location='".site_url('auth')."'</script>";
+				$this->session->set_userdata($params); ?>
+				 
+				<body></body>
+				<script>
+					Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: 'Login berhasil'
+					}).then((result)=>{
+						window.location='<?=site_url('dashboard')?>';
+					})
+				</script>
+			<?php
+			}else{ ?>
+				<body></body>
+				<script>
+					Swal.fire({
+						icon: 'error',
+						title: 'Failure',
+						text: 'Login Gagal, Username/Password Salah'
+					}).then((result)=>{
+						window.location='<?=site_url('auth')?>';
+					})
+				</script>
+			<?php
 			}
 		}
 	}

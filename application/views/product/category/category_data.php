@@ -10,7 +10,8 @@
     </section>
 
     <section class="content">
-        <?php $this->view('messages')?>
+        
+        <div id="flash" data-flash="<?=$this->session->flashdata('save')?>"></div>
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Data Categories</h3>
@@ -37,7 +38,7 @@
                         <td><?= $data->nama?></td>
                         <td class="text-center">
                             <a href="<?= site_url('category/edit/'.$data->id_category)?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Update</a>
-                            <a href="<?= site_url('category/del/'.$data->id_category)?>" onclick="return confirm('Apakah yakin akan menghapus data ini?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a></td>
+                            <a href="<?= site_url('category/del/'.$data->id_category)?>" id="btn-hapus" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a></td>
                         </tr>
                         <?php } ?>
                     </tbody>
